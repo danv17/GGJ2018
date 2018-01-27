@@ -44,8 +44,7 @@ public class Player : MonoBehaviour {
         if (x > 0.5f)
         {
             isFacingRight = true;
-            //isFacingRight = anim.GetBool("isright");
-            //anim.SetTrigger ("playerMoveRight");
+            anim.SetBool("isRight", true);
 
         }
         if (x < -0.5f)
@@ -71,7 +70,7 @@ public class Player : MonoBehaviour {
 
     void movement(float x, float y)
     {
-        this.transform.Translate(new Vector2(x, y) * Time.deltaTime);
+        this.transform.Translate(new Vector2(x, y) * Time.deltaTime * 3.0f);
         //Debug.Log(x + ", " + y);
     }
 }

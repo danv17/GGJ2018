@@ -6,7 +6,7 @@ public class Wave : MonoBehaviour {
 
     BoxCollider2D bc2d;
     Rigidbody2D rb2d;
-    public float speed = 3.0f;    
+    public float speed = 7.0f;    
    
    
 
@@ -18,7 +18,6 @@ public class Wave : MonoBehaviour {
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.velocity = new Vector2(x, y) * speed; //rb2d.velocity.x
-
         Destroy(this.gameObject, 1);
     }
 	
@@ -30,9 +29,15 @@ public class Wave : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+        
         if (other.tag == "Enemy")
         {
-            Destroy(this.gameObject, 0.2f);
+            Debug.Log("Trigger Wave");
+            Destroy(this.gameObject, 0.1f);
+            Color colorTemp = other.gameObject.GetComponent<Renderer>().material.color;
+            colorTemp.a = 0.5f;
+            other.gameObject.GetComponent<Renderer>().material.color = colorTemp;
+            Debug.Log(colorTemp.a);        
         }
     }
 }
