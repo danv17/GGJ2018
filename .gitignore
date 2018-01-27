@@ -23,6 +23,7 @@ ExportedObj/
 *.svd
 *.pdb
 GGJ2018/Temp
+GGJ2018/Library
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -36,3 +37,4 @@ sysinfo.txt
 GGJ2018/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
 GGJ2018/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
 *.meta
+GGJ2018/Library/assetDatabase3
