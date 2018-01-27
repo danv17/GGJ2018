@@ -11,6 +11,9 @@ public class Player : MonoBehaviour {
     public GameObject wavePrefab;
     public bool isFacingUp;
     public bool isFacingRight;
+    public GameObject energy;
+    public int maxNumWave = 5;
+    public int contEnergy = 0;
 
     // Use this for initialization
     void Start ()
@@ -18,6 +21,7 @@ public class Player : MonoBehaviour {
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        energy = GameObject.FindGameObjectWithTag("Energy");
         //StartCoroutine("waveDestroy",wave);
     }
 
@@ -28,23 +32,13 @@ public class Player : MonoBehaviour {
         float y = Input.GetAxis("Vertical");
 
         this.movement(x, y);
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            anim.SetTrigger("playerChop");
-            Instantiate(wavePrefab, transform.position, transform.rotation);
-
-            /*waveInstance.GetComponent<Rigidbody2D>().velocity = waveInstance.transform.forward * 10.0f;
-            waveInstance.transform.TransformDirection(Vector3.forward*5.0f);
-            Debug.Log(waveInstance.transform.position.x);
-            waveInstance.transform.Translate(new Vector2(5.0f, 0));
-            Debug.Log(waveInstance.transform.position.x);
-            Destroy(waveInstance, 8.0f);*/
-        }
+        this.shoot();
+        this.loadEnergy();
+        
         if (x > 0.5f)
         {
             isFacingRight = true;
-            anim.SetBool("isRight", true);
+            //anim.SetBool("isRight", true);
 
         }
         if (x < -0.5f)
@@ -72,5 +66,77 @@ public class Player : MonoBehaviour {
     {
         this.transform.Translate(new Vector2(x, y) * Time.deltaTime * 3.0f);
         //Debug.Log(x + ", " + y);
+    }
+
+    void shoot()
+    {
+        if (Input.GetKeyDown(KeyCode.C) && maxNumWave > 0)
+        {
+            anim.SetTrigger("playerChop");
+            Instantiate(wavePrefab, transform.position, transform.rotation);
+            SpriteRenderer[] b = energy.GetComponent<Battery>().batteries;
+            int i = energy.GetComponent<Battery>().cont;
+            b[i].enabled = false;
+            maxNumWave--;
+        }
+    }
+
+    void loadEnergy()
+    {
+        SpriteRenderer[] b = energy.GetComponent<Battery>().batteries;
+        int i = energy.GetComponent<Battery>().cont;
+        rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
+        if (Input.GetKeyDown(KeyCode.RightControl))
+        {
+            anim.SetTrigger("playerHit");
+            contEnergy++;
+            if (contEnergy == 8)
+            {
+                if (!b[1].isVisible)
+                {
+                    b[1].enabled = true;
+                    maxNumWave++;
+                    rb2d.constraints = RigidbodyConstraints2D.None;
+                }
+            }
+            if (contEnergy == 13)
+            {
+                if (!b[2].isVisible)
+                {
+                    b[2].enabled = true;
+                    maxNumWave++;
+                    rb2d.constraints = RigidbodyConstraints2D.None;
+                }
+            }
+            if (contEnergy == 17)
+            {
+                if (!b[3].isVisible)
+                {
+                    b[3].enabled = true;
+                    maxNumWave++;
+                    rb2d.constraints = RigidbodyConstraints2D.None;
+                }
+            }
+            if (contEnergy == 21)
+            {
+                if (!b[4].isVisible)
+                {
+                    b[4].enabled = true;
+                    maxNumWave++;
+                    rb2d.constraints = RigidbodyConstraints2D.None;
+                }
+            }
+            if (contEnergy == 25)
+            {
+                if (!b[5].isVisible)
+                {
+                    b[5].enabled = true;
+                    contEnergy = 0;
+                    maxNumWave++;
+                    rb2d.constraints = RigidbodyConstraints2D.None;
+                }
+            }
+        }
+            
     }
 }
