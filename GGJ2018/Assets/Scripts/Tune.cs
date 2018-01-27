@@ -32,13 +32,11 @@ public class Tune : MonoBehaviour
             {
                 needle.transform.Translate(new Vector3(-1.0f * Time.deltaTime, 0, 0));
                 index.transform.Rotate(new Vector3(0, 0, 1.0f));
-                Debug.Log("Aasdasd");
             }
             else if (needle.transform.position.x == boundVisor.bounds.min.x + 0.3)
             {
                 needle.transform.Translate(new Vector3(1.0f * Time.deltaTime, 0, 0));
                 index.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-                Debug.Log("no me muevo");
             }
         }
 
@@ -49,13 +47,11 @@ public class Tune : MonoBehaviour
             {
                 needle.transform.Translate(new Vector3(1.0f * Time.deltaTime, 0, 0));
                 index.transform.Rotate(new Vector3(0, 0, -1.0f));
-                Debug.Log("Aasdasd");
             }
             else if (needle.transform.position.x == boundVisor.bounds.max.x - 0.29)
             {
                 needle.transform.Translate(new Vector3(-1.0f * Time.deltaTime, 0, 0));
                 index.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-                Debug.Log("No me muevo");
             }
         }
     }

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     public BoxCollider2D bc2d;
     public Rigidbody2D rb2d;
@@ -13,10 +14,10 @@ public class Player : MonoBehaviour {
     public bool isFacingRight;
     public GameObject energy;
     public int maxNumWave = 5;
-    public int contEnergy = 0;
+    public int contEnergyHits = 0;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour {
         this.movement(x, y);
         this.shoot();
         this.loadEnergy();
-        
+
         if (x > 0.5f)
         {
             isFacingRight = true;
@@ -42,14 +43,14 @@ public class Player : MonoBehaviour {
 
         }
         if (x < -0.5f)
-        {           
+        {
             isFacingRight = false;
             //anim.SetTrigger ("playerMoveLeft");
 
         }
         if (y > 0.5f)
-        {            
-            isFacingUp = true;           
+        {
+            isFacingUp = true;
             //anim.SetTrigger ("playerMoveUp");
 
         }
@@ -78,6 +79,7 @@ public class Player : MonoBehaviour {
             int i = energy.GetComponent<Battery>().cont;
             b[i].enabled = false;
             maxNumWave--;
+            contEnergyHits = 0;
         }
     }
 
@@ -86,57 +88,97 @@ public class Player : MonoBehaviour {
         SpriteRenderer[] b = energy.GetComponent<Battery>().batteries;
         int i = energy.GetComponent<Battery>().cont;
         rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
-        if (Input.GetKeyDown(KeyCode.RightControl))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            anim.SetTrigger("playerHit");
-            contEnergy++;
-            if (contEnergy == 8)
+            //Se activa la animación solo cuando la energía es menor a 5
+            if (i < 5)
             {
-                if (!b[1].isVisible)
+                anim.SetTrigger("playerHit");
+            }
+            contEnergyHits++;
+            //if (contEnergyHits == 8)
+            //{
+            //    if (!b[1].isVisible)
+            //    {
+            //        b[1].enabled = true;
+            //        maxNumWave++;
+            //    }
+            //}
+            //if (contEnergyHits == 13)
+            //{
+            //    if (!b[2].isVisible)
+            //    {
+            //        b[2].enabled = true;
+            //        maxNumWave++;
+            //    }
+            //}
+            //if (contEnergyHits == 17)
+            //{
+            //    if (!b[3].isVisible)
+            //    {
+            //        b[3].enabled = true;
+            //        maxNumWave++;
+            //    }
+            //}
+            //if (contEnergyHits == 21)
+            //{
+            //    if (!b[4].isVisible)
+            //    {
+            //        b[4].enabled = true;
+            //        maxNumWave++;
+            //    }
+            //}
+            //if (contEnergyHits == 25)
+            //{
+            //    if (!b[5].isVisible)
+            //    {
+            //        b[5].enabled = true;
+            //        contEnergyHits = 0;
+            //        maxNumWave = 5;
+            //    }
+            //}
+
+            if (contEnergyHits == 25)
+            {
+                if (!b[5].isVisible)
                 {
-                    b[1].enabled = true;
-                    maxNumWave++;
-                    rb2d.constraints = RigidbodyConstraints2D.None;
+                    b[5].enabled = true;
+                    contEnergyHits = 0;
+                    maxNumWave = 5;
                 }
             }
-            if (contEnergy == 13)
-            {
-                if (!b[2].isVisible)
-                {
-                    b[2].enabled = true;
-                    maxNumWave++;
-                    rb2d.constraints = RigidbodyConstraints2D.None;
-                }
-            }
-            if (contEnergy == 17)
-            {
-                if (!b[3].isVisible)
-                {
-                    b[3].enabled = true;
-                    maxNumWave++;
-                    rb2d.constraints = RigidbodyConstraints2D.None;
-                }
-            }
-            if (contEnergy == 21)
+            else if (contEnergyHits == 21)
             {
                 if (!b[4].isVisible)
                 {
                     b[4].enabled = true;
                     maxNumWave++;
-                    rb2d.constraints = RigidbodyConstraints2D.None;
                 }
             }
-            if (contEnergy == 25)
+            else if (contEnergyHits == 17)
             {
-                if (!b[5].isVisible)
+                if (!b[3].isVisible)
                 {
-                    b[5].enabled = true;
-                    contEnergy = 0;
+                    b[3].enabled = true;
                     maxNumWave++;
-                    rb2d.constraints = RigidbodyConstraints2D.None;
+                }
+            }
+            else if (contEnergyHits == 13)
+            {
+                if (!b[2].isVisible)
+                {
+                    b[2].enabled = true;
+                    maxNumWave++;
+                }
+            }
+            else if (contEnergyHits == 8)
+            {
+                if (!b[1].isVisible)
+                {
+                    b[1].enabled = true;
+                    maxNumWave++;
                 }
             }
         }
-            
     }
 }
