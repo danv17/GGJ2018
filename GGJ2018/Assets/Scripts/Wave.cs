@@ -17,7 +17,6 @@ public class Wave : MonoBehaviour {
         float y = Input.GetAxis("Vertical");
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
-
         rb2d.velocity = new Vector2(x, y) * speed; //rb2d.velocity.x
 
         Destroy(this.gameObject, 1);
@@ -29,8 +28,11 @@ public class Wave : MonoBehaviour {
        
     }
 
-    public void waveMove(float x)
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        this.rb2d.velocity.Set(x,0);
+        if (other.tag == "Enemy")
+        {
+            Destroy(this.gameObject, 0.2f);
+        }
     }
 }
