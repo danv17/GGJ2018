@@ -8,7 +8,6 @@ public class Player : MonoBehaviour {
     public Rigidbody2D rb2d;
     public Animator anim;
 
-
 	// Use this for initialization
 	void Start () {
 
@@ -23,20 +22,5 @@ public class Player : MonoBehaviour {
         {
             anim.SetTrigger("playerChop");
         }
-		if(Input.GetKey(KeyCode.LeftArrow)){
-			//anim.SetTrigger ("playerMove");
-
-		}
-		if(Input.GetKey(KeyCode.RightArrow)){
-			//anim.SetTrigger ("playerMove");
-
-		}
-		if(Input.GetKey(KeyCode.UpArrow)){
-			//anim.SetTrigger ("playerMoveUp");
-
-		}
-		if(Input.GetKey(KeyCode.DownArrow)){
-			//anim.SetTrigger ("playerMove");
-
-		}
+	}
 }
