@@ -1,11 +1,16 @@
 fileFormatVersion: 2
 guid: 689bf38bb98e16b46b55a11d5ac8def3
-timeCreated: 1517014389
+timeCreated: 1517028069
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - bc2d: {instanceID: 0}
+  - rb2d: {instanceID: 0}
+  - anim: {instanceID: 0}
+  - waveInstance: {instanceID: 0}
+  - wave: {fileID: 1073375910380364, guid: f9c07c86c0cd92b4e98edd57b3ed1bf3, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

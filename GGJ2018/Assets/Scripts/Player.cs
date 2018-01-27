@@ -8,17 +8,18 @@ public class Player : MonoBehaviour {
     public Rigidbody2D rb2d;
     public Animator anim;
     public GameObject waveInstance;
-    public GameObject wave;
+    public GameObject wavePrefab;
+    public bool isFacingUp;
+    public bool isFacingRight;
 
-
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         //StartCoroutine("waveDestroy",wave);
-	}
+    }
 
     // Update is called once per frame
     void Update()
@@ -28,45 +29,49 @@ public class Player : MonoBehaviour {
 
         this.movement(x, y);
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             anim.SetTrigger("playerChop");
-            waveInstance = (GameObject) Instantiate(wave, transform.position, transform.rotation);
-            waveInstance.transform.Translate(Vector2.right * Time.deltaTime, Space.World);
-            
+            Instantiate(wavePrefab, transform.position, transform.rotation);
+
+            /*waveInstance.GetComponent<Rigidbody2D>().velocity = waveInstance.transform.forward * 10.0f;
+            waveInstance.transform.TransformDirection(Vector3.forward*5.0f);
+            Debug.Log(waveInstance.transform.position.x);
+            waveInstance.transform.Translate(new Vector2(5.0f, 0));
+            Debug.Log(waveInstance.transform.position.x);
+            Destroy(waveInstance, 8.0f);*/
         }
         if (x > 0.5f)
         {
+            isFacingRight = true;
+            //isFacingRight = anim.GetBool("isright");
             //anim.SetTrigger ("playerMoveRight");
 
         }
         if (x < -0.5f)
-        {
+        {           
+            isFacingRight = false;
             //anim.SetTrigger ("playerMoveLeft");
 
         }
         if (y > 0.5f)
-        {
+        {            
+            isFacingUp = true;           
             //anim.SetTrigger ("playerMoveUp");
 
         }
         if (y < -0.5f)
         {
+            isFacingUp = false;
             //anim.SetTrigger ("playerMoveDown");
 
         }
-    }
-
-    IEnumerator waveDestroy(Wave w)
-    {
-        yield return new WaitForSeconds(1.0f);
-        Debug.Log("Paso el tiempo");
-        DestroyImmediate(w);
-        Debug.Log("Destruir");
+        //Debug.Log("isRight: " + isFacingRight + ", isUpt: " + isFacingUp);
     }
 
     void movement(float x, float y)
     {
         this.transform.Translate(new Vector2(x, y) * Time.deltaTime);
+        //Debug.Log(x + ", " + y);
     }
 }
