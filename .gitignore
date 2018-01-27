@@ -23,6 +23,7 @@ ExportedObj/
 *.svd
 *.pdb
 GGJ2018/Temp
+GGJ2018/Library
 
 # Unity3D generated meta files
 *.pidb.meta
