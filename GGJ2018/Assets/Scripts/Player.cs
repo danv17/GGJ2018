@@ -7,8 +7,9 @@ public class Player : MonoBehaviour {
     public BoxCollider2D bc2d;
     public Rigidbody2D rb2d;
     public Animator anim;
-    public Wave wave;
-	float speed = 1.0f;
+    public GameObject waveInstance;
+    public GameObject wave;
+
 
 	// Use this for initialization
 	void Start ()
@@ -16,13 +17,11 @@ public class Player : MonoBehaviour {
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        //StartCoroutine("waveDestroy",wave);
 	}
 
     // Update is called once per frame
     void Update()
-	{	
-		
-		if (Input.GetKeyDown(KeyCode.Z))
     {
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
@@ -32,9 +31,8 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             anim.SetTrigger("playerChop");
-            Instantiate(wave, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
-            wave.transform.Translate(new Vector2(5 * wave.speed * Time.deltaTime, 0));
-            this.waveDestroy(wave);
+            waveInstance = (GameObject) Instantiate(wave, transform.position, transform.rotation);
+            waveInstance.transform.Translate(Vector2.right * Time.deltaTime, Space.World);
             
         }
         if (x > 0.5f)
@@ -61,8 +59,10 @@ public class Player : MonoBehaviour {
 
     IEnumerator waveDestroy(Wave w)
     {
-        yield return new WaitForSeconds(5.0f);
-        DestroyObject(w);
+        yield return new WaitForSeconds(1.0f);
+        Debug.Log("Paso el tiempo");
+        DestroyImmediate(w);
+        Debug.Log("Destruir");
     }
 
     void movement(float x, float y)
