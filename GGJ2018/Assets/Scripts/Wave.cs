@@ -6,7 +6,7 @@ public class Wave : MonoBehaviour {
 
     public BoxCollider2D bc2d;
     public Rigidbody2D rb2d;
-    public float speed = 0.3f;
+    public float speed = 2f;
 
     // Use this for initialization
     void Start () {

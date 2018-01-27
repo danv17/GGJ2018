@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        //StartCoroutine("waveDestroy",wave);
 	}
 
     // Update is called once per frame
@@ -30,8 +31,7 @@ public class Player : MonoBehaviour {
         {
             anim.SetTrigger("playerChop");
             Instantiate(wave, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
-            wave.transform.Translate(new Vector2(5 * wave.speed * Time.deltaTime, 0));
-            this.waveDestroy(wave);
+            wave.transform.Translate(Vector2.right);
             
         }
         if (x > 0.5f)
@@ -58,8 +58,10 @@ public class Player : MonoBehaviour {
 
     IEnumerator waveDestroy(Wave w)
     {
-        yield return new WaitForSeconds(5.0f);
-        DestroyObject(w);
+        yield return new WaitForSeconds(1.0f);
+        Debug.Log("Paso el tiempo");
+        DestroyImmediate(w);
+        Debug.Log("Destruir");
     }
 
     void movement(float x, float y)
