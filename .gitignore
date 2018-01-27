@@ -35,3 +35,4 @@ sysinfo.txt
 *.unitypackage
 GGJ2018/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
 GGJ2018/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
+*.meta
