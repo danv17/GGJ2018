@@ -33,8 +33,6 @@ public class Player : MonoBehaviour {
             anim.SetTrigger("playerChop");
             waveInstance = (GameObject) Instantiate(wave, transform.position, transform.rotation);
             waveInstance.transform.Translate(Vector2.right * Time.deltaTime, Space.World);
-
-            this.transform.Rotate(new Vector3(0,0,3.0f));
             
         }
         if (x > 0.5f)
