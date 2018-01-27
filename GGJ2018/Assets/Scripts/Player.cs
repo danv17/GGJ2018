@@ -20,11 +20,9 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update()
-<<<<<<< HEAD
 	{	
 		
 		if (Input.GetKeyDown(KeyCode.Z))
-=======
     {
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
@@ -32,7 +30,6 @@ public class Player : MonoBehaviour {
         this.movement(x, y);
 
         if (Input.GetKeyDown(KeyCode.Z))
->>>>>>> 7af1f6f1bc7ebebf2d6d2cf9fca35b1189a0639d
         {
             anim.SetTrigger("playerChop");
             Instantiate(wave, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
@@ -45,11 +42,7 @@ public class Player : MonoBehaviour {
             //anim.SetTrigger ("playerMoveRight");
 
         }
-<<<<<<< HEAD
-        if ()
-=======
         if (x < -0.5f)
->>>>>>> 7af1f6f1bc7ebebf2d6d2cf9fca35b1189a0639d
         {
             //anim.SetTrigger ("playerMoveLeft");
 
