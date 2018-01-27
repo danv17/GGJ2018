@@ -21,7 +21,7 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             anim.SetTrigger("playerChop");
             Instantiate(wave, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
