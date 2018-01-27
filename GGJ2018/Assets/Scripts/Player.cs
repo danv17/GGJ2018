@@ -7,7 +7,8 @@ public class Player : MonoBehaviour {
     public BoxCollider2D bc2d;
     public Rigidbody2D rb2d;
     public Animator anim;
-    public Wave wave;
+    public GameObject waveInstance;
+    public GameObject wave;
 
 
 	// Use this for initialization
@@ -30,8 +31,8 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             anim.SetTrigger("playerChop");
-            Instantiate(wave, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
-            wave.transform.Translate(Vector2.right);
+            waveInstance = (GameObject) Instantiate(wave, transform.position, transform.rotation);
+            waveInstance.transform.Translate(Vector2.right * Time.deltaTime, Space.World);
             
         }
         if (x > 0.5f)
