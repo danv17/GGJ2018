@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
     public Rigidbody2D rb2d;
     public Animator anim;
     public Wave wave;
-
+	float speed = 1.0f;
 
 	// Use this for initialization
 	void Start ()
@@ -20,8 +20,9 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
+	{	
+		
+		if (Input.GetKeyDown(KeyCode.Z))
         {
             anim.SetTrigger("playerChop");
             Instantiate(wave, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
@@ -33,7 +34,7 @@ public class Player : MonoBehaviour {
             //anim.SetTrigger ("playerMove");
 
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if ()
         {
             //anim.SetTrigger ("playerMove");
 
