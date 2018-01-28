@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     public int contEnergyHits = 0;
     public bool isCharging = false;
     public GameObject[] glasses;
+    public AudioClip[] glassBreak;
+    public AudioSource audioSource;
 
     // Use this for initialization
     void Start()
@@ -23,6 +25,7 @@ public class Player : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         energy = GameObject.FindGameObjectWithTag("Energy");
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -99,6 +102,8 @@ public class Player : MonoBehaviour
             if (i < 5)
             {
                 anim.SetBool("isCharging", isCharging);
+                audioSource.Stop();
+                audioSource.PlayOneShot(audioSource.clip);
             }
             ++contEnergyHits;
             if (contEnergyHits == 8)
@@ -161,9 +166,8 @@ public class Player : MonoBehaviour
             this.hp--;
             if(hp < 5 && hp > 0)
             {
-                Debug.Log(other.name);
                 (Instantiate(glasses[hp-1], transform.position, transform.rotation) as GameObject).transform.parent = this.transform;
-                Debug.Log(other.name);
+                audioSource.PlayOneShot(glassBreak[hp - 1]);
             }
 
             if (hp==0)
