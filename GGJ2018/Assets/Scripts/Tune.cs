@@ -23,8 +23,6 @@ public class Tune : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(index.transform.rotation.z);
-
         //Min bound
         if (Input.GetKey(KeyCode.Z))
         {

@@ -22,11 +22,6 @@ public class Enemy : MonoBehaviour {
         {
             transform.Translate(new Vector2(-1.0f * Time.deltaTime, 0));
         }
-        else
-        {
-            StartCoroutine("canMoveAgain");
-        }
-        
     }
 
     IEnumerator canMoveAgain()
@@ -36,5 +31,33 @@ public class Enemy : MonoBehaviour {
         colorTemp.a = 1.0f;
         this.GetComponent<Renderer>().material.color = colorTemp;
         canMove = true;
+    }
+
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.CompareTag("Wave"))
+    //    {
+    //        Debug.Log("Me toco una wea");
+    //        Destroy(other.gameObject, 0.1f);
+    //        Color colorTemp = this.gameObject.GetComponent<Renderer>().material.color;
+    //        colorTemp.a = 0.5f;
+    //        this.gameObject.GetComponent<Renderer>().material.color = colorTemp;
+    //        this.canMove = false;
+    //        StartCoroutine("canMoveAgain");
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.CompareTag("Wave"))
+        {
+            Destroy(other.gameObject, 0.1f);
+            Color colorTemp = other.gameObject.GetComponent<Renderer>().material.color;
+            colorTemp.a = 0.5f;
+            this.gameObject.GetComponent<Renderer>().material.color = colorTemp;
+            this.canMove = false;
+            StartCoroutine("canMoveAgain");
+        }
     }
 }
