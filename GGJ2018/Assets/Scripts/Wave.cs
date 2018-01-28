@@ -7,20 +7,33 @@ public class Wave : MonoBehaviour
 
     public BoxCollider2D bc2d;
     public Rigidbody2D rb2d;
-    public float speed = 7.0f;
+    public float speed = 10.0f;
 
     // Use this for initialization
     void Start()
     {
-        float x = 10f;
-
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
         this.bc2d = GetComponent<BoxCollider2D>();
         this.rb2d = GetComponent<Rigidbody2D>();
-        this.rb2d.velocity = Vector2.right * speed; //new Vector2(x, y) * speed; //rb2d.velocity.x
+        //this.rb2d.velocity = Vector2.right * speed; //new Vector2(x, y) * speed; //rb2d.velocity.x
         //this.transform.Translate(new Vector2(x, y) * speed);
         //this.rb2d.AddForce(new Vector2(x, y));
-        //rb2d.velocity = new Vector2(5f,5f) * speed;
-        Destroy(this.gameObject, 1);
+
+        if (x > 0.5f) { //right
+            rb2d.transform.Rotate(new Vector3(0, 0,180));
+        }
+        else if (y > 0.5f) //up
+        {
+            rb2d.transform.Rotate(new Vector3(0, 0, -90));
+        }
+        else if (y < -0.5f) //down
+        {
+            rb2d.transform.Rotate(new Vector3(0, 0, 90));
+        }
+
+        rb2d.velocity = new Vector2(x, y) * speed;
+        Destroy(this.gameObject, 2);        
     }
 
     // Update is called once per frame

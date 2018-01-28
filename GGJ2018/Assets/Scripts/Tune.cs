@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Tune : MonoBehaviour
 {
-
     public GameObject index;
     public GameObject needle;
     public GameObject visor;

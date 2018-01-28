@@ -1,20 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-
+    public int hp = 5;
     public BoxCollider2D bc2d;
     public Rigidbody2D rb2d;
     public Animator anim;
     public GameObject wavePrefab;
-    public bool isFacingUp;
-    public bool isFacingRight;
     public GameObject energy;
     public int maxNumWave = 5;
     public int contEnergyHits = 0;
     public bool isCharging = false;
+    public GameObject[] glasses;
 
     // Use this for initialization
     void Start()
@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         energy = GameObject.FindGameObjectWithTag("Energy");
-        //StartCoroutine("waveDestroy",wave);
     }
 
     // Update is called once per frame
@@ -32,10 +31,16 @@ public class Player : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         this.loadEnergy();
-        if (!isCharging)
+        if (!isCharging && hp>0)
         {
             this.movement(x, y);
             this.shoot();
+        }
+        else
+        {
+            anim.SetBool("isMoving", false);
+
+            Debug.Log(anim.GetFloat("lastPosX"));
         }
 
 
@@ -44,34 +49,22 @@ public class Player : MonoBehaviour
         //    this.loadEnergy();
         //}
 
-        if (x > 0.5f)
+        if (x > 0.5f || x < -0.5f)
         {
-            isFacingRight = true;
-            //anim.SetBool("isRight", true);
+            anim.SetFloat("posX", x);
+            anim.SetBool("isRight", x > 0.5f ? true : false);
 
         }
-        if (x < -0.5f)
+        if (y > 0.5f || y < -0.5f)
         {
-            isFacingRight = false;
-            //anim.SetTrigger ("playerMoveLeft");
-
-        }
-        if (y > 0.5f)
-        {
-            isFacingUp = true;
-            //anim.SetTrigger ("playerMoveUp");
-
-        }
-        if (y < -0.5f)
-        {
-            isFacingUp = false;
-            //anim.SetTrigger ("playerMoveDown");
-
+            anim.SetFloat("posY", y);
+            anim.SetBool("isUp", y > 0.5f ? true : false);
         }
     }
 
     void movement(float x, float y)
     {
+        anim.SetBool("isMoving", true);
         this.transform.Translate(new Vector2(x, y) * Time.deltaTime * 3.0f);
     }
 
@@ -79,7 +72,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C) && maxNumWave > 0)
         {
-            anim.SetTrigger("playerChop");
+            //anim.SetTrigger("playerChop"); playerChop ya no existe para girl
             Instantiate(wavePrefab, transform.position, transform.rotation);
             SpriteRenderer[] b = energy.GetComponent<Battery>().batteries;
             int i = energy.GetComponent<Battery>().cont;
@@ -156,6 +149,27 @@ public class Player : MonoBehaviour
                 this.isCharging = false;
                 Debug.Log(isCharging);
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("plip");
+            this.hp--;
+            if(hp < 5 && hp > 0)
+            {
+                Debug.Log(other.name);
+                (Instantiate(glasses[hp-1], transform.position, transform.rotation) as GameObject).transform.parent = this.transform;
+            }
+
+            if (hp==0)
+            {
+
+                SceneManager.LoadScene("gameOver");
+            }
+            
         }
     }
 }
