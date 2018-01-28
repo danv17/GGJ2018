@@ -25,7 +25,6 @@ public class Frequence : MonoBehaviour {
             source.Stop();
             print(r);
             source.PlayOneShot(freqs[r]);
-            source.volume = 0.5f;
         }
     }
 

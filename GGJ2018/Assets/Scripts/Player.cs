@@ -33,14 +33,19 @@ public class Player : MonoBehaviour
         this.loadEnergy();
         if (!isCharging && hp>0)
         {
-            this.movement(x, y);
-            this.shoot();
+            if(x != 0 || y != 0)
+            {
+                this.movement(x, y);
+                anim.SetFloat("lastPosX", x);
+                anim.SetFloat("lastPosY", y);
+                anim.SetBool("isMoving", true);
+                this.shoot();
+            }
+            
         }
         else
         {
             anim.SetBool("isMoving", false);
-
-            Debug.Log(anim.GetFloat("lastPosX"));
         }
 
 
@@ -52,13 +57,11 @@ public class Player : MonoBehaviour
         if (x > 0.5f || x < -0.5f)
         {
             anim.SetFloat("posX", x);
-            anim.SetBool("isRight", x > 0.5f ? true : false);
 
         }
         if (y > 0.5f || y < -0.5f)
         {
             anim.SetFloat("posY", y);
-            anim.SetBool("isUp", y > 0.5f ? true : false);
         }
     }
 
@@ -95,7 +98,7 @@ public class Player : MonoBehaviour
             //Se activa la animación solo cuando la energía es menor a 5
             if (i < 5)
             {
-                anim.SetTrigger("playerHit");
+                anim.SetBool("isCharging", isCharging);
             }
             ++contEnergyHits;
             if (contEnergyHits == 8)
@@ -145,9 +148,8 @@ public class Player : MonoBehaviour
             }
             if (contEnergyHits >= 25 && i == 5)
             {
-                Debug.Log(isCharging);
                 this.isCharging = false;
-                Debug.Log(isCharging);
+                anim.SetBool("isCharging", isCharging);
             }
         }
     }
@@ -156,12 +158,12 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("plip");
             this.hp--;
             if(hp < 5 && hp > 0)
             {
                 Debug.Log(other.name);
                 (Instantiate(glasses[hp-1], transform.position, transform.rotation) as GameObject).transform.parent = this.transform;
+                Debug.Log(other.name);
             }
 
             if (hp==0)
